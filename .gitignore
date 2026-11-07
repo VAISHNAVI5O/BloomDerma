@@ -1,0 +1,35 @@
+dist/
+target/
+*.log
+.idea/
+.vscode/
+uploads/
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+target/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+application-local.properties
+
+# Logs
+*.log
+logs/
+
+# IDE files
+.idea/
+.vscode/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Uploaded files and generated data
+uploads/

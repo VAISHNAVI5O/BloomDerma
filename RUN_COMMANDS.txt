@@ -1,0 +1,154 @@
+BLOOMDERMA - VS CODE COMMANDS
+=============================
+
+Requirements: Java 17+, Maven (or mvnw), Node 18+, MySQL 8 running locally (user root / password root,
+or change backend/src/main/resources/application.properties). The database is created automatically.
+
+1) Open the extracted "bloomderma" folder in VS Code (File > Open Folder).
+
+2) Terminal 1 - backend (Terminal > New Terminal):
+     cd backend
+     mvn spring-boot:run
+   (Windows PowerShell, if a wrapper exists:  .\mvnw.cmd spring-boot:run)
+   No manual migration is needed: Hibernate adds the new columns (users.doctor_id, doctors.phone,
+   doctors.email) and the seeder upgrades old doctor logins automatically on start.
+
+3) Terminal 2 - frontend:
+     cd frontend
+     npm install
+     npm run dev
+
+4) Open http://localhost:5173
+
+5) (Optional) API checks of the role rules, with the backend running (needs bash + curl):
+     bash scripts/api_smoke_test.sh
+
+LOGINS (first screen: choose Doctor Login or Admin / Receptionist Login)
+------------------------------------------------------------------------
+Admin / Receptionist login:
+  Admin         ID: admin          password: admin123
+  Receptionist  ID: receptionist   password: reception123
+  Staff (old)   ID: staff          password: staff123    (treated like front desk)
+
+Patient login (first screen > Patient Login):
+  Demo patient  username: patient1   password: patient123   (linked to demo patient SK001)
+  New patients: Patient Login > "New patient? Create an account".
+
+Doctor login (ID = Doctor ID):
+  Dr. Ananya Sharma   ID: ananya   password: doctor123
+  Dr. Riya Mehta      ID: riya   password: doctor123
+  Dr. Arjun Kapoor    ID: arjun   password: doctor123
+  Dr. Neha Patel      ID: neha   password: doctor123
+  Dr. Kavya Iyer      ID: kavya   password: doctor123
+  Dr. Rahul Shah      ID: rahul   password: doctor123
+
+The doctor ID is the doctor's first name and the password is doctor123 (same as the original project).
+The old generic "doctor" login belonged to no doctor record and is removed.
+No test doctor was created in the project; create one as Admin (Doctors > Add doctor).
+
+WHAT CHANGED
+------------
+Update 1  Two-step login (Doctor / Admin-Receptionist) enforced by the backend (loginType).
+          Admin > Doctors > "Add doctor": creates the doctor + own login (BCrypt), unique Doctor ID.
+Update 2  Booking: choosing Skin Concern / Treatment asks the backend for doctors whose STORED
+          speciality matches (mapping file: backend/src/main/resources/speciality-mapping.json).
+          Patient history (all patients, all visits) for Admin, Receptionist and every Doctor.
+Update 3  POST/PUT /api/appointments (and patients) return 403 for doctors; UI controls removed.
+Payment   After a confirmed booking a "Payment received / Keep as due" box appears; the Appointments table has a
+          Paid/Due badge and a "Mark paid / Mark due" button (Admin & Receptionist only). Unpaid stays Due.
+Revenue   Admin revenue page: new "Monthly revenue by doctor" table (all doctors x 12 months, total/collected/due).
+Login     Login page has "Add New Doctor" - it asks for ADMIN ID + password first, then the doctor's details.
+Revenue   Doctor revenue/monthly graph come from the authenticated doctor's id only.
+
+PATIENT PORTAL (new)
+--------------------
+Patient Login > dashboard tabs: Home | Book Appointment | Video Consult | My Reports | My Bills | My Recovery
+  * Book Appointment : concern -> suggested doctors (speciality match) -> free time slots. Fee is set by the server
+                       (price of the chosen treatment, else bloomderma.fees.in-clinic).
+  * Video Consult    : doctors with their video charge (Doctor.videoFee, default bloomderma.fees.video-default);
+                       the call opens on the day of the consultation ("Join call"); doctor joins from
+                       Appointments > "Join video call". Browser-to-browser (WebRTC): allow camera/microphone.
+                       Use http://localhost or https:// - browsers block the camera on plain http://<ip>.
+  * My Reports       : upload PDF/PNG/JPG/WEBP (max 10 MB) -> stored in backend/uploads/ ; doctors and staff see
+                       them on the patient's page.
+  * My Bills         : every bill with Paid / Partial / Due and the amounts.
+  * My Recovery      : daily 1-10 check-ins + progress bars; doctors and staff see them on the patient's page.
+Admin / Receptionist: Patients > (patient) > "Patient portal login" creates a login for an existing patient.
+
+PAYMENTS (new): Appointments > "Payment" (or the box after booking): Paid in full / Part paid (enter amount received,
+the rest stays DUE) / Not paid. Revenue "collected" counts part-payments; "due" is the remaining amount.
+
+
+WHAT'S NEW IN THIS VERSION
+==========================
+1) DOCTOR-GENERATED REPORTS (PDF on the patient's account)
+   Doctor login > Patients > open a patient > "Create report for this patient":
+     - type keywords (symptoms/findings) and the prescription (one medicine per line)
+     - press "Generate report" -> an editable report appears -> review/edit -> "Save as PDF to patient's account"
+   The PDF is stored on the patient's account (Patient portal > My Reports, tagged "Prepared by Dr. ...");
+   the patient can open/download it but cannot delete it. The prescription is always the doctor's own text, verbatim.
+   AI wording: set your Anthropic API key BEFORE starting the backend (otherwise a built-in template is used):
+        PowerShell :  $env:ANTHROPIC_API_KEY="sk-ant-..."
+        cmd.exe    :  set ANTHROPIC_API_KEY=sk-ant-...
+        macOS/Linux:  export ANTHROPIC_API_KEY=sk-ant-...
+        then       :  cd backend  &&  mvn spring-boot:run
+   Optional: bloomderma.ai.model in application.properties. Privacy: only the keywords, the patient's age/gender and
+   the doctor's speciality are sent to the AI service - never the patient's name or ID.
+
+2) PATIENT IDs  - every Patient ID is in the format SK + 3 digits (SK001, SK002 ... SK999) and is ALWAYS given by the system:
+   patients do not type an ID on the sign-up form, and a new patient booked by reception (blank Patient ID) gets the next
+   free number. Phone numbers must be exactly 10 digits. Passwords (patients and doctors) need 8+ characters with an
+   uppercase letter, a lowercase letter, a digit and a special character. Booking form: leave "Patient ID" blank to register
+   a new patient, or type/pick an existing ID (name, age and gender are filled in). An unknown ID is rejected.
+   Existing demo patients (SK001, SK002 ...) keep their IDs. On start-up the backend REMOVES every patient whose ID is not
+   SK### (older BD-xxxxxx / self-chosen IDs) together with their appointments, login, reports, photos, recovery check-ins
+   and reviews - see PatientIdCleanup.java and the "UPDATE" section of FIX_NOTES.md.
+
+3) PAYMENT SCREEN re-designed and aligned (Appointments > Payment, and the box after booking).
+
+4) DARK MODE - moon/sun button in the top bar (and on the login page, patient portal). Remembered per browser.
+
+5) Fixed: the bars in "Revenue by doctor" / recovery progress were invisible (CSS).
+
+
+UPDATE: PASSWORDS, FILE VIEWING, PHOTOS, REVIEWS, REMINDERS
+===========================================================
+* Every password box has an eye button (show / hide). After a wrong ID or password the boxes are cleared
+  and the cursor goes back to the ID box.
+* Files can now be opened: PDFs and images open in an in-page viewer (Download / Open in new tab / Close, Esc closes).
+  Before, the file was opened in a new window AFTER downloading, which browsers silently blocked as a popup.
+  Patients: My Reports > View.   Doctors / staff: Patients > (patient) > Reports > View.
+* BEFORE & AFTER photos (patient portal > "Before & After"): upload a before photo (and the after photo now or later).
+  Only the patient, their doctors and the clinic staff can see them (doctors/staff: patient page > "Before & after photos").
+  PNG / JPG / WEBP, up to 10 MB each; the file content is checked, not just the name.
+* REVIEWS (patient portal > "Reviews"; doctors & staff: top bar > "Reviews"): star rating + text, optionally about one doctor,
+  optionally anonymous. Everyone logged in can read them; a patient can delete their own; Admin can remove any.
+* REMINDERS (patient portal, shown at the top of every tab): appointments / video calls within the next 3 days, e.g.
+  "Video consultation with Dr. X starts in 39 minutes" with a Join call button; payment due is mentioned.
+  "Turn on" enables desktop notifications 1 hour and 15 minutes before (only while the portal page is open in a browser tab).
+  Reminders by e-mail / SMS need an e-mail or SMS service account and are not included.
+
+
+UPDATE: REPORT FILES FIX, SIGN-IN FIRST, NEW DARK MODE, NO EMOJIS
+================================================================
+1) REPORT / PHOTO FILES THAT "THROW AN ERROR"
+   Cause: files were saved in a folder next to the program (./uploads) while the report records live in the database.
+   After unzipping a new version (a new folder) or starting the backend from another folder, old records pointed at
+   files that were no longer there. Fix: files are now stored IN THE DATABASE (table stored_files), so they always
+   travel with the records.
+     - Files saved by older versions are imported automatically the first time they are opened IF they are still in
+       the old upload folder (backend/uploads, or the folder set in UPLOAD_DIR). If the old folder is gone, those few
+       files must be uploaded again - the viewer then says so clearly.
+     - The file type is now detected from the file CONTENT (a PNG named .jpg, or a PDF with a few junk bytes in front,
+       is accepted). HTML/scripts renamed to .pdf/.png are still rejected. HEIC phone photos must be saved as JPG.
+     - If the viewer ever fails it now shows the server's real message and the error number.
+     - MySQL 5.7 note: files up to 10 MB need  max_allowed_packet=32M  (MySQL 8 already allows 64 MB).
+
+2) SIGN-IN IS ALWAYS THE FIRST PAGE. Opening the site (typing the address / a new tab) shows sign-in. A login only
+   lasts for the current browser tab, and F5 (refresh) keeps you signed in. Sign out returns to sign-in.
+
+3) DARK MODE re-designed ("Amethyst Night"): deep indigo-black background with soft aurora glow, frosted-glass top bar,
+   violet/lavender gradient buttons and active menu, glowing focus rings, gradient headings, styled badges/tables/modals.
+
+4) EMOJIS removed everywhere except the flower on the sign-in page (the BloomDerma logo icon in the top bar and the
+   star ratings stay, they are not emojis).

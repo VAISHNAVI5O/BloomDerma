@@ -1,0 +1,29 @@
+{
+  "_help": "Speciality <-> concern/treatment mapping. To expand: add names to 'concerns' or 'treatments', or add a new speciality block. A name may appear under several specialities (listed order = suggestion order). Treatment entries win over concern entries. 'aliases' are other spellings of the speciality that may already be stored on doctor accounts.",
+  "specialities": [
+    { "name": "Acne & Pigmentation",
+      "aliases": ["Acne and Pigmentation"],
+      "concerns": ["Acne", "Pigmentation", "Skin Pigmentation", "Melasma", "Dark Spots"],
+      "treatments": ["Acne Consultation", "Acne Care", "Pigmentation Consultation", "Pigmentation"] },
+    { "name": "Dermatology",
+      "aliases": ["General Dermatology", "Clinical Dermatology", "Dermatologist"],
+      "concerns": ["Acne", "Eczema", "Psoriasis", "Dry Skin", "Other Skin Concern", "General Consultation", "General Dermatology Consultation", "Rash", "Skin Infection"],
+      "treatments": [] },
+    { "name": "Cosmetic Dermatology",
+      "aliases": ["Aesthetic Dermatology"],
+      "concerns": ["Fine Lines", "Anti-Aging", "Anti-Ageing", "Wrinkles", "Skin Pigmentation", "Pigmentation"],
+      "treatments": ["Chemical Peel", "Skin Rejuvenation"] },
+    { "name": "Laser Dermatology",
+      "aliases": [],
+      "concerns": ["Laser Treatment", "Unwanted Hair", "Tattoo"],
+      "treatments": ["Laser Treatment", "Tattoo Removal"] },
+    { "name": "Procedural Dermatology",
+      "aliases": [],
+      "concerns": ["Acne Scars", "Scar Treatment", "Scars", "Scarring"],
+      "treatments": ["Microneedling"] },
+    { "name": "Trichology / Hair Specialist",
+      "aliases": ["Trichology", "Hair & Scalp Dermatology", "Hair & Scalp", "Hair Specialist"],
+      "concerns": ["Hair Fall", "Hair Loss", "Dandruff", "Scalp Problem"],
+      "treatments": ["Hair & Scalp Consultation", "Hair & Scalp"] }
+  ]
+}

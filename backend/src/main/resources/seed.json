@@ -1,0 +1,344 @@
+{
+ "DOCTORS": [
+  {
+   "id": "doc1",
+   "name": "Dr. Ananya Sharma",
+   "specialty": "Clinical Dermatology",
+   "bio": "General dermatology, acne and common skin conditions.",
+   "color1": "#E88AA7",
+   "color2": "#C15C7C",
+   "slots": [
+    "09:00 AM",
+    "09:30 AM",
+    "10:00 AM",
+    "10:30 AM",
+    "11:00 AM",
+    "11:30 AM",
+    "12:00 PM",
+    "12:30 PM"
+   ],
+   "treats": [
+    "Acne",
+    "Eczema",
+    "Psoriasis"
+   ]
+  },
+  {
+   "id": "doc2",
+   "name": "Dr. Riya Mehta",
+   "specialty": "Cosmetic Dermatology",
+   "bio": "Skin rejuvenation, pigmentation and aesthetic procedures.",
+   "color1": "#C9B6E4",
+   "color2": "#8768B3",
+   "slots": [
+    "11:00 AM",
+    "11:30 AM",
+    "12:00 PM",
+    "12:30 PM",
+    "01:00 PM",
+    "02:00 PM",
+    "03:00 PM",
+    "03:30 PM"
+   ],
+   "treats": [
+    "Pigmentation",
+    "Peels",
+    "Anti-ageing"
+   ]
+  },
+  {
+   "id": "doc3",
+   "name": "Dr. Arjun Kapoor",
+   "specialty": "Laser Dermatology",
+   "bio": "Laser-based dermatology and pigmentation procedures.",
+   "color1": "#A9D8EE",
+   "color2": "#4D91B4",
+   "slots": [
+    "02:00 PM",
+    "02:30 PM",
+    "03:00 PM",
+    "03:30 PM",
+    "04:00 PM",
+    "05:00 PM",
+    "06:00 PM",
+    "06:30 PM"
+   ],
+   "treats": [
+    "Laser",
+    "Pigmentation",
+    "Scarring"
+   ]
+  },
+  {
+   "id": "doc4",
+   "name": "Dr. Neha Patel",
+   "specialty": "Acne & Pigmentation",
+   "bio": "Acne, acne scars, pigmentation and melasma care.",
+   "color1": "#E88AA7",
+   "color2": "#C15C7C",
+   "slots": [
+    "09:00 AM",
+    "09:30 AM",
+    "10:00 AM",
+    "10:30 AM",
+    "11:00 AM",
+    "11:30 AM",
+    "12:00 PM",
+    "12:30 PM"
+   ],
+   "treats": [
+    "Acne",
+    "Scars",
+    "Melasma"
+   ]
+  },
+  {
+   "id": "doc5",
+   "name": "Dr. Kavya Iyer",
+   "specialty": "Hair & Scalp Dermatology",
+   "bio": "Hair loss, dandruff and scalp-related consultations.",
+   "color1": "#9FD8C4",
+   "color2": "#4F9C82",
+   "slots": [
+    "12:00 PM",
+    "12:30 PM",
+    "01:00 PM",
+    "02:00 PM",
+    "03:00 PM",
+    "04:00 PM",
+    "04:30 PM",
+    "05:00 PM"
+   ],
+   "treats": [
+    "Hair Fall",
+    "Dandruff",
+    "Scalp"
+   ]
+  },
+  {
+   "id": "doc6",
+   "name": "Dr. Rahul Shah",
+   "specialty": "Procedural Dermatology",
+   "bio": "Microneedling, skin procedures and lesion consultations.",
+   "color1": "#FFD9B3",
+   "color2": "#E39A4A",
+   "slots": [
+    "03:00 PM",
+    "03:30 PM",
+    "04:00 PM",
+    "04:30 PM",
+    "05:00 PM",
+    "06:00 PM",
+    "07:00 PM",
+    "07:30 PM"
+   ],
+   "treats": [
+    "Microneedling",
+    "Procedures",
+    "Scarring"
+   ]
+  }
+ ],
+ "PATIENTS": [
+  {
+   "id": "SK001",
+   "name": "Aarav Patil",
+   "age": 22,
+   "gender": "Male",
+   "visits": [
+    {
+     "date": "D18",
+     "doctorId": "doc4",
+     "issue": "Acne",
+     "treatment": "Acne consultation",
+     "fee": 1000,
+     "paid": true
+    },
+    {
+     "date": "D5",
+     "doctorId": "doc4",
+     "issue": "Acne",
+     "treatment": "Follow-up review",
+     "fee": 800,
+     "paid": true
+    }
+   ]
+  },
+  {
+   "id": "SK002",
+   "name": "Priya Shah",
+   "age": 27,
+   "gender": "Female",
+   "visits": [
+    {
+     "date": "D25",
+     "doctorId": "doc2",
+     "issue": "Pigmentation",
+     "treatment": "Pigmentation consultation",
+     "fee": 1200,
+     "paid": true
+    },
+    {
+     "date": "D8",
+     "doctorId": "doc2",
+     "issue": "Pigmentation",
+     "treatment": "Laser consultation",
+     "fee": 3500,
+     "paid": false
+    }
+   ]
+  },
+  {
+   "id": "SK003",
+   "name": "Rahul Joshi",
+   "age": 31,
+   "gender": "Male",
+   "visits": [
+    {
+     "date": "D12",
+     "doctorId": "doc6",
+     "issue": "Acne Scars",
+     "treatment": "Procedure consultation",
+     "fee": 1500,
+     "paid": true
+    },
+    {
+     "date": "D2",
+     "doctorId": "doc6",
+     "issue": "Acne Scars",
+     "treatment": "Microneedling consultation",
+     "fee": 4500,
+     "paid": false
+    }
+   ]
+  },
+  {
+   "id": "SK004",
+   "name": "Meera Joshi",
+   "age": 29,
+   "gender": "Female",
+   "visits": [
+    {
+     "date": "D3",
+     "doctorId": "doc1",
+     "issue": "Eczema",
+     "treatment": "Clinical dermatology consultation",
+     "fee": 900,
+     "paid": true
+    }
+   ]
+  },
+  {
+   "id": "SK005",
+   "name": "Devika Rao",
+   "age": 41,
+   "gender": "Female",
+   "visits": [
+    {
+     "date": "D0",
+     "doctorId": "doc5",
+     "issue": "Hair Fall",
+     "treatment": "Hair and scalp consultation",
+     "fee": 1500,
+     "paid": true
+    }
+   ]
+  },
+  {
+   "id": "SK006",
+   "name": "Ishaan Gupta",
+   "age": 24,
+   "gender": "Male",
+   "visits": [
+    {
+     "date": "D0",
+     "doctorId": "doc1",
+     "issue": "Acne",
+     "treatment": "Skin consultation",
+     "fee": 1000,
+     "paid": true
+    }
+   ]
+  }
+ ],
+ "APPOINTMENTS": [
+  {
+   "id": "APT001",
+   "patientId": "SK001",
+   "patient": "Aarav Patil",
+   "doctorId": "doc4",
+   "issue": "Acne",
+   "treatment": "Follow-up",
+   "date": "D0",
+   "time": "10:30 AM",
+   "fee": 800,
+   "status": "Confirmed"
+  },
+  {
+   "id": "APT002",
+   "patientId": "SK002",
+   "patient": "Priya Shah",
+   "doctorId": "doc2",
+   "issue": "Pigmentation",
+   "treatment": "Laser consultation",
+   "date": "D0",
+   "time": "12:00 PM",
+   "fee": 1200,
+   "status": "Confirmed"
+  },
+  {
+   "id": "APT003",
+   "patientId": "SK003",
+   "patient": "Rahul Joshi",
+   "doctorId": "doc6",
+   "issue": "Acne Scars",
+   "treatment": "Procedure consultation",
+   "date": "D0",
+   "time": "03:30 PM",
+   "fee": 1500,
+   "status": "Pending"
+  }
+ ],
+ "SERVICES": [
+  {
+   "name": "Acne Care",
+   "icon": "bi-bandaid",
+   "description": "Dermatology consultation for acne-prone skin."
+  },
+  {
+   "name": "Chemical Peel",
+   "icon": "bi-droplet",
+   "description": "Professional peel consultation and scheduling."
+  },
+  {
+   "name": "Laser Treatment",
+   "icon": "bi-stars",
+   "description": "Laser dermatology consultation and procedures."
+  },
+  {
+   "name": "Pigmentation",
+   "icon": "bi-brightness-high",
+   "description": "Pigmentation and uneven skin tone care."
+  },
+  {
+   "name": "Microneedling",
+   "icon": "bi-circle-half",
+   "description": "Microneedling consultation and scheduling."
+  },
+  {
+   "name": "Skin Rejuvenation",
+   "icon": "bi-person-hearts",
+   "description": "Aesthetic skin rejuvenation consultation."
+  },
+  {
+   "name": "Hair & Scalp",
+   "icon": "bi-scissors",
+   "description": "Hair loss and scalp consultation."
+  },
+  {
+   "name": "Tattoo Removal",
+   "icon": "bi-palette",
+   "description": "Tattoo removal dermatology consultation."
+  }
+ ]
+}

@@ -1,0 +1,504 @@
+<nav class="topnav">
+
+  <a href="#/" class="brand">
+
+    <span class="brand-petal">
+      <i class="bi bi-flower2"></i>
+    </span>
+
+    <span>
+      <span class="brand-word">BloomDerma</span>
+      <span class="brand-sub">Dermatology & Trichology</span>
+    </span>
+
+  </a>
+
+  <div class="nav-links">
+
+    <a href="#/" data-route="/">Dashboard</a>
+
+    <a href="#/appointments" data-route="/appointments">
+      Appointments
+    </a>
+
+    <a href="#/patients" data-route="/patients">
+      Patients
+    </a>
+
+    <a href="#/doctors" data-route="/doctors">
+      Doctors
+    </a>
+
+    <a href="#/services" data-route="/services">
+      Services
+    </a>
+
+    <a href="#/revenue" data-route="/revenue" id="revenueNavLink">
+      Revenue
+    </a>
+    <a href="#/reviews" data-route="/reviews">Reviews</a>
+
+    <button type="button" class="theme-toggle" onclick="toggleTheme()"
+            title="Switch light / dark mode" aria-label="Switch light / dark mode">
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3l1.7 1.7M17 17l1.7 1.7M5.3 18.7 7 17M17 7l1.7-1.7"/></svg>
+    </button>
+    <button
+      class="btn btn-rose nav-action" id="navNewAppointment"
+      onclick="openAppointmentModal()">
+
+      <i class="bi bi-calendar-plus"></i>
+      New Appointment
+
+    </button>
+
+  </div>
+
+</nav>
+
+
+<main class="page" id="app"></main>
+
+
+<div class="toast" id="toast"></div>
+
+
+<!-- =========================================================
+     APPOINTMENT MODAL
+========================================================= -->
+
+<div class="modal-backdrop" id="appointmentModal">
+
+  <div class="modal">
+
+    <div class="modal-header">
+
+      <h2>
+        <i class="bi bi-calendar-heart"></i>
+        New Skin Appointment
+      </h2>
+
+      <button
+        class="modal-close"
+        onclick="closeModal('appointmentModal')">
+
+        <i class="bi bi-x-lg"></i>
+
+      </button>
+
+    </div>
+
+
+    <form id="appointmentForm">
+
+      <div class="modal-body">
+
+        <div class="form-grid">
+
+          <div class="field">
+
+            <label>Patient ID <small style="font-weight:600;">(blank = new patient, ID is generated)</small></label>
+
+            <input
+              id="appointmentPatientId"
+              list="patientIdList"
+              autocomplete="off"
+              placeholder="e.g. SK001 — or leave blank">
+            <datalist id="patientIdList"></datalist>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Patient Name</label>
+
+            <input
+              id="appointmentPatientName"
+              placeholder="Demo Patient"
+              required>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Age</label>
+
+            <input
+              id="appointmentAge"
+              type="number"
+              min="1"
+              max="120"
+              placeholder="28"
+              required>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Gender</label>
+
+            <select id="appointmentGender">
+
+              <option>Female</option>
+              <option>Male</option>
+              <option>Other</option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Skin Concern</label>
+
+            <select id="appointmentIssue" required>
+
+              <option value="">Select concern</option>
+
+              <option>Acne</option>
+              <option>Acne Scars</option>
+              <option>Eczema</option>
+              <option>Pigmentation</option>
+              <option>Melasma</option>
+              <option>Dry Skin</option>
+              <option>Hair Fall</option>
+              <option>Dandruff</option>
+              <option>Scalp Problem</option>
+              <option>Fine Lines</option>
+              <option>Other Skin Concern</option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Dermatologist</label>
+
+            <select id="appointmentDoctor" required>
+
+              <option value="">Select doctor</option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Treatment / Consultation</label>
+
+            <select id="appointmentTreatment" required>
+
+              <option value="">Select service</option>
+
+              <option>Skin Consultation</option>
+              <option>Acne Consultation</option>
+              <option>Chemical Peel</option>
+              <option>Laser Treatment</option>
+              <option>Pigmentation Consultation</option>
+              <option>Microneedling</option>
+              <option>Skin Rejuvenation</option>
+              <option>Hair & Scalp Consultation</option>
+              <option>Tattoo Removal</option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Appointment Date</label>
+
+            <input
+              id="appointmentDate"
+              type="date"
+              required>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Available Slot</label>
+
+            <select id="appointmentSlot" required>
+
+              <option value="">
+                Select doctor first
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Consultation / Treatment Fee (₹)</label>
+
+            <input
+              id="appointmentFee"
+              type="number"
+              min="0"
+              value="1000"
+              required>
+
+          </div>
+
+
+          <div class="field full">
+
+            <div class="alert alert-info" id="doctorInfo">
+
+              Select a dermatologist to see their
+              specialty and available slots.
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="modal-footer">
+
+        <button
+          type="button"
+          class="btn btn-outline"
+          onclick="closeModal('appointmentModal')">
+
+          Cancel
+
+        </button>
+
+        <button
+          type="submit"
+          class="btn btn-rose">
+
+          <i class="bi bi-check-circle"></i>
+          Confirm Appointment
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     PAYMENT MODAL (Admin / Receptionist): paid in full, part paid (some due), or not paid
+========================================================= -->
+
+<div class="modal-backdrop" id="paymentModal">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <h2><i class="bi bi-cash-coin"></i> Record Payment</h2>
+      <button class="modal-close" onclick="closeModal('paymentModal')"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="modal-body">
+
+      <div class="pay-summary">
+        <div>
+          <strong id="payWho"></strong>
+          <small id="payRef"></small>
+        </div>
+        <div class="pay-fee-box">
+          <small>Bill amount</small>
+          <div class="pay-fee" id="payFee"></div>
+        </div>
+      </div>
+
+      <div class="pay-options">
+        <label class="pay-option">
+          <input type="radio" name="payMode" value="full" onchange="paymentModeChanged()">
+          <span>Paid in full<small>The patient has paid the whole amount</small></span>
+        </label>
+
+        <label class="pay-option">
+          <input type="radio" name="payMode" value="part" onchange="paymentModeChanged()">
+          <span>Part paid<small>Some amount is still due</small></span>
+        </label>
+
+        <div class="pay-amount" id="payPartField" style="display:none;">
+          <label for="payAmount">Amount received so far</label>
+          <div class="input-prefix">
+            <span>₹</span>
+            <input id="payAmount" type="number" min="1" step="1" placeholder="0" oninput="paymentModeChanged()">
+          </div>
+        </div>
+
+        <label class="pay-option">
+          <input type="radio" name="payMode" value="none" onchange="paymentModeChanged()">
+          <span>Not paid<small>The full amount stays due</small></span>
+        </label>
+      </div>
+
+      <div class="pay-due">
+        <span>Amount due</span>
+        <strong id="payDueText">—</strong>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline" onclick="closeModal('paymentModal')">Cancel</button>
+      <button type="button" class="btn btn-rose" onclick="savePayment()"><i class="bi bi-check-circle"></i> Save payment</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- =========================================================
+     ADD DOCTOR MODAL (Admin only)
+========================================================= -->
+
+<div class="modal-backdrop" id="doctorModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2><i class="bi bi-person-plus"></i> Add New Doctor</h2>
+      <button class="modal-close" onclick="closeModal('doctorModal')"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <form id="doctorForm" autocomplete="off">
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="field"><label>Doctor Name</label>
+            <input id="doctorName" placeholder="Dr. Full Name" required></div>
+          <div class="field"><label>Doctor ID (login)</label>
+            <input id="doctorLoginId" placeholder="e.g. doc7" required></div>
+          <div class="field"><label>Password</label>
+            <div class="pw-wrap"><input id="doctorPassword" type="password" minlength="8" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9 ]).{8,72}" title="At least 8 characters with an uppercase letter, a lowercase letter, a digit and a special character" placeholder="Min. 8: Aa, 1, @" autocomplete="new-password" required><button type="button" class="pw-toggle" onclick="togglePw('doctorPassword')" aria-label="Show or hide password" title="Show / hide password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+          <div class="field"><label>Speciality</label>
+            <select id="doctorSpeciality" required><option value="">Select speciality</option></select></div>
+          <div class="field"><label>Video consultation fee (₹)</label>
+            <input id="doctorVideoFee" type="number" min="0" placeholder="Default 500"></div>
+          <div class="field"><label>Phone</label>
+            <input id="doctorPhone" type="tel" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" title="Exactly 10 digits" placeholder="10-digit number" oninput="this.value=this.value.replace(/[^0-9]/g,'')"></div>
+          <div class="field"><label>Email</label>
+            <input id="doctorEmail" type="email" placeholder="doctor@example.com"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline" onclick="closeModal('doctorModal')">Cancel</button>
+        <button type="submit" class="btn btn-rose"><i class="bi bi-check-circle"></i> Create Doctor</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- =========================================================
+     HISTORY MODAL
+========================================================= -->
+
+<div class="modal-backdrop" id="historyModal">
+
+  <div class="modal">
+
+    <div class="modal-header">
+
+      <h2>
+        <i class="bi bi-clock-history"></i>
+        Patient History
+      </h2>
+
+      <button
+        class="modal-close"
+        onclick="closeModal('historyModal')">
+
+        <i class="bi bi-x-lg"></i>
+
+      </button>
+
+    </div>
+
+    <div class="modal-body" id="historyContent"></div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================================================
+     SUCCESS MODAL
+========================================================= -->
+
+<div class="modal-backdrop" id="successModal">
+
+  <div class="modal">
+
+    <div class="modal-body" style="text-align:center;padding:40px 25px;">
+
+      <div style="
+        width:70px;
+        height:70px;
+        margin:auto;
+        border-radius:50%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:#e3f6ed;
+        color:#4f9c82;
+        font-size:2.2rem;
+      ">
+
+        <i class="bi bi-check-lg"></i>
+
+      </div>
+
+      <h2 style="margin:18px 0 5px;">
+        Appointment Confirmed
+      </h2>
+
+      <p
+        id="successMessage"
+        style="
+          color:var(--ink-soft);
+          font-size:.82rem;
+          line-height:1.7;
+        ">
+      </p>
+
+      <div id="paymentBox" style="margin:14px 0 4px;display:none;">
+        <div style="font-weight:700;margin-bottom:10px;">Has the patient paid?</div>
+        <div class="pay-actions">
+          <button type="button" class="btn btn-rose" id="payPaidBtn">
+            <i class="bi bi-check-circle"></i> Paid in full
+          </button>
+          <button type="button" class="btn btn-outline" id="payPartBtn">
+            <i class="bi bi-cash-coin"></i> Part paid / some due
+          </button>
+          <button type="button" class="btn btn-outline" id="payDueBtn">
+            <i class="bi bi-hourglass-split"></i> Keep as due
+          </button>
+        </div>
+        <div id="paymentResult" class="pay-result"></div>
+      </div>
+
+
+      <button
+        class="btn btn-rose" style="margin-top:18px;min-width:120px;"
+        onclick="closeModal('successModal')">
+
+        Done
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
